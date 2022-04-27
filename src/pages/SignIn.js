@@ -1,27 +1,41 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {createUserWithEmailAndPassword } from 'firebase/auth';
-import {auth} from "../firebase";
+import {auth, db} from "../firebase";
 import { useNavigate, Link } from 'react-router-dom';
+import {collection, deleteDoc, doc, onSnapshot, addDoc } from "firebase/firestore";
+import { async } from '@firebase/util';
+
+
 const Signin = () => {
     let navigate = useNavigate();
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+
     const status = true
+    const focus =  useRef(null);
     const time = new Date()
-    const _doSignin = (evt) => {
+    useEffect(() => {
+    }, [])
+    const _doSignin = async (evt) => {
         evt.preventDefault();
-        createUserWithEmailAndPassword(auth, email, password, status, time)
+        createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log(user)
+                console.log(user.uid)
                 alert("Đăng kí thành công");
                 navigate('/')
+                pushData(user.uid)
             })
             .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
                 alert(errorCode + errorMessage);
             });
+    }
+    async function pushData(id) {
+        const collectionRef = collection(db, 'users');
+        console.log(id)
+        await addDoc(collectionRef, { createdAt: time,email: email, password: password,status: true, uid: id});
     }
     return (
         <div className="bg-white h-screen items-center justify-center shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
