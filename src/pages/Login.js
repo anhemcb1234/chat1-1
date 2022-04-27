@@ -15,7 +15,7 @@ const Login = () => {
             console.log(resp.user);
             sessionStorage.setItem('user', JSON.stringify(resp.user));
             alert('Đăng nhập thành công');
-            navigate('/add')
+            navigate('/home')
         } catch (e) {
             alert("Đăng nhập thất bại");
             console.error(e);
