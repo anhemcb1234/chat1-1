@@ -2,9 +2,7 @@ import React, { useEffect } from "react";
 import {auth} from "../../firebase";
 
 function Home() {
-
     useEffect(() => {
-        
         auth.onAuthStateChanged((user) => {
             if (user) {
                 console.log(user);
@@ -19,7 +17,7 @@ function Home() {
                 <div className="relative"> <input type="text" className="w-full h-12 rounded focus:outline-none px-3 focus:shadow-md" placeholder="Search..."/>  </div>
                 <ul>
                     <li className="flex justify-between items-center bg-white mt-2 p-2 hover:shadow-lg rounded cursor-pointer transition">
-                        <div className="flex ml-2"> <img src="https://i.imgur.com/aq39RMA.jpg" width="40" height="40" className="rounded-full"/>
+                        <div className="flex ml-2">
                             <div className="flex flex-col ml-2"> <span className="font-medium text-black">Jessica Koel</span> <span className="text-sm text-gray-400 truncate w-32">Hey, Joel, I here to help you out please tell me</span> </div>
                         </div>
                         <div className="flex flex-col items-center"> <span className="text-gray-300">11:26</span> </div>

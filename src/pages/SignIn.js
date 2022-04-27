@@ -11,8 +11,6 @@ const Signin = () => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const status = true
-    const focus =  useRef(null);
     const time = new Date()
     useEffect(() => {
     }, [])
@@ -35,7 +33,7 @@ const Signin = () => {
     async function pushData(id) {
         const collectionRef = collection(db, 'users');
         console.log(id)
-        await addDoc(collectionRef, { createdAt: time,email: email, password: password,status: true, uid: id});
+        await addDoc(collectionRef, { createdAt: time,email: email, password: password,status: false, uid: id});
     }
     return (
         <div className="bg-white h-screen items-center justify-center shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
