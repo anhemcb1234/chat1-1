@@ -10,7 +10,6 @@ import {
   where,
 } from "firebase/firestore";
 
-
 export default function ChatBox() {
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
@@ -75,32 +74,6 @@ export default function ChatBox() {
       setUserTwo(user?.find((x) => x.id === userIdTwo));
     });
   }
-
-  //Get message roomchat
-  const handlerRoom = async () => {
-    const collectionRef = collection(db, "roomchat");
-    const collectionQuery = query(
-      collectionRef,
-      where("roomID", "in", [
-        [idUserTwo, useId],
-        [useId, idUserTwo],
-      ])
-    );
-    unsub = onSnapshot(collectionQuery, (snapShot) => {
-      const room = [];
-      snapShot.forEach((doc) => {
-        room.push({
-          id: doc.id,
-          id_user: doc.data().user,
-          id_room: doc.data().roomID,
-          message: doc.data().message,
-          time: doc.data().time,
-        });
-      });
-      setRooms(room);
-    });
-  };
-
 
 
   return (
