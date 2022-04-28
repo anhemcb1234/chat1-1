@@ -103,7 +103,7 @@ export default function ChatBox() {
   return (
     <div className="overflow-hidden">
       {" "}
-      {userTwo?.email ? (
+      {rooms[0] ? (
         <div>
           <div>
             {/* component */}
