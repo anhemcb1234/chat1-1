@@ -14,6 +14,8 @@ function Home() {
   const [statusLogin, setStatusLogin] = useState(false);
   const [filter, setFilter] = useState("");
   const [show, setShow] = useState(true);
+  const [message, setMessage] = useState([]);
+  const [dataMess, setDataMess] = useState([]);
 
   let unsub = null;
   let time = new Date();
@@ -23,6 +25,7 @@ function Home() {
       navigate("/");
     }
     getUsers();
+    getMessage();
   }, []);
   useEffect(() => {
     updateStatus();
@@ -72,11 +75,47 @@ function Home() {
   const handlerFilter = (e) => {
     setFilter(e.target.value);
   };
+  useEffect(() => {
+    console.log(dataMess);
+    // console.log(dataMess[dataMess?.length-1]?.message)
+    console.log(1);
+  }, [dataMess]);
+  const handlerMess = () => {
+    // let dataMessage = message?.filter((mess) => (mess.roomID[0] === auth.currentUser.uid || mess.roomID[1] === auth.currentUser.uid));
+    console.log(message);
+    console.log(auth.currentUser.uid);
+    // setDataMess(datasMess)
+  };
+  //Get message roomchat
+  async function getMessage() {
+    const collectionRef = collection(db, "roomchat");
+    const collectionQuery = query(
+      collectionRef,
+      where("roomID", "in", [
+        [idUserTwo, useId],
+        [useId, idUserTwo],
+      ])
+    );
+    unsub = onSnapshot(collectionQuery, (snapShot) => {
+      const room = [];
+      snapShot.forEach((doc) => {
+        room.push({
+          id: doc.id,
+          id_user: doc.data().user,
+          id_room: doc.data().roomID,
+          message: doc.data().message,
+          time: doc.data().time,
+        });
+      });
+      setRooms(room);
+    });
+  }
 
   return (
     <>
       {show ? (
         <div className="py-10 h-full bg-gray-300 px-2">
+          <button onClick={handlerMess}>Click</button>
           {auth.currentUser?.email ? (
             <div className="max-w-md mx-auto bg-gray-100 shadow-lg rounded-lg overflow-hidden md:max-w-lg">
               <div>
@@ -141,7 +180,7 @@ function Home() {
               </div>
             </div>
           ) : (
-            <div className="w-screen h-screen flex items-center justify-center">
+            <div className="w-full h-screen flex items-center justify-center">
               <svg
                 role="status"
                 className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

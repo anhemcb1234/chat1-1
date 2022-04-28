@@ -23,7 +23,6 @@ export default function ChatBox() {
   const [idUserTwo, SetIdUserTwo] = useState("");
   const [dataSort, setDataSort] = useState([]);
   const [userTwo, setUserTwo] = useState([]);
-  const [icon, setIcon] = useState([]);
 
   let unsub = null;
 
@@ -101,6 +100,8 @@ export default function ChatBox() {
       setRooms(room);
     });
   };
+
+
 
   return (
     <div>
@@ -185,7 +186,7 @@ export default function ChatBox() {
           </div>
         </div>
       ) : (
-        <div className="w-screen h-screen flex items-center justify-center">
+        <div className="w-full h-screen flex items-center justify-center">
           <svg
             role="status"
             className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
