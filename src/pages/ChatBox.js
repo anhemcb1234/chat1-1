@@ -13,7 +13,7 @@ export default function ChatBox() {
   const [rooms, setRooms] = useState([]);
   const [user, SetUser] = useState([]);
   const [idUserTwo, SetIdUserTwo] = useState('');
-
+  const [dataSort, setDataSort] = useState([]);
   let unsub = null
   //
   useEffect(() => {
@@ -55,6 +55,7 @@ export default function ChatBox() {
     });
     SetUser(users);
     SetIdUserTwo(user?.find(x => x.id === userIdTwo)?.id_user)
+    setDataSort()
 });
 }
   const handlerRoom = async () => {        
@@ -80,9 +81,7 @@ export default function ChatBox() {
     handlerRoom()
     getUsers()
   }, [idUserTwo])
-  const getUserIDTwo = () => {
-    SetIdUserTwo(user?.find(x => x.id === userIdTwo).id_user)
-  }
+
   return (
     <div>
       {" "}
@@ -127,7 +126,7 @@ export default function ChatBox() {
               id="messages"
               className="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
             >
-              {rooms?.map((item, index) => {
+              {rooms?.sort((a, b) => a.time.seconds - b.time.seconds).map((item, index) => {
                 return (
                   <div key={index}> 
                      <span className={item.id_user === useId ? 'px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white float-right' : "px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600"}>
