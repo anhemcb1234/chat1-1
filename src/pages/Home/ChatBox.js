@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
-import { db, auth } from "../firebase";
+import { db, auth } from "../../firebase";
 import {collection,  onSnapshot, addDoc, query, where } from "firebase/firestore";
 
 export default function ChatBox() {

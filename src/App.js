@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import Login from './pages/Login';
 import SignIn from './pages/SignIn';
-import Home from './pages/Home/Home'
-import ChatBox from './pages/ChatBox'
+import Home from './pages/home/Home'
+import ChatBox from './pages/home/ChatBox'
 export default function App() {
   return (
     <div>
