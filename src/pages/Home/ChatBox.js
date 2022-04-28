@@ -16,7 +16,7 @@ export default function ChatBox() {
 
   const [comment, setComment] = useState("");
   const useId = JSON.parse(sessionStorage.getItem("user")).uid;
-  const [userIdTwo, setUserIdTwo] = useState(searchParam.get("id"));
+  const userIdTwo= searchParam.get("id");
   const [rooms, setRooms] = useState([]);
   const [user, SetUser] = useState([]);
   const [idUserTwo, SetIdUserTwo] = useState("");
