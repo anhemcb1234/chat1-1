@@ -86,6 +86,7 @@ export default function ChatBox() {
   const getInfoUserTwo = () => {
     setUserTwo(user?.find(x => x.id === userIdTwo))
   }
+
   return (
     <div>
       {" "}
@@ -95,7 +96,7 @@ export default function ChatBox() {
           <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen">
             <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
               <div className="relative flex items-center space-x-4">
-                  <span className="absolute text-green-500 bottom-1  left-2">
+                  <span className={userTwo.status ? "absolute text-green-500 bottom-1  left-2" : "absolute text-red-500 bottom-1  left-2"}>
                     <svg width={20} height={20}>
                       <circle cx={8} cy={8} r={8} fill="currentColor" />
                     </svg>
