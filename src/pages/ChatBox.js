@@ -2,31 +2,36 @@ import React, { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { db, auth } from "../firebase";
-import {collection, deleteDoc, doc, onSnapshot,getDoc, addDoc, docRef, updateDoc, query, where } from "firebase/firestore";
+import {collection,  onSnapshot, addDoc, query, where } from "firebase/firestore";
 
 export default function ChatBox() {
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
+
   const [comment, setComment] = useState("");
-  const [useId, setUserId] = useState(JSON.parse(sessionStorage.getItem('user')).uid);
+  const useId = JSON.parse(sessionStorage.getItem('user')).uid;
   const [userIdTwo, setUserIdTwo] = useState(searchParam.get('id'));
   const [rooms, setRooms] = useState([]);
   const [user, SetUser] = useState([]);
   const [idUserTwo, SetIdUserTwo] = useState('');
   const [dataSort, setDataSort] = useState([]);
   const [userTwo, setUserTwo] = useState([]);
+  
   let unsub = null
-  //
-  useEffect(() => {
 
-  }, [])
-  const push = (e) => {
+
+  useEffect(() => {
+    handlerRoom()
+    getUsers()
+  }, [idUserTwo])
+
+  //Hanlder submit
+  const handlerSubmit = (e) => {
     e.preventDefault();
     if (!comment) {
-      alert("please write somethingg");
+      alert("Bạn chưa nhập nội dung");
       return;
     }
-
     const collectionRef = collection(db, "roomchat");
     (async () => {
       try {
@@ -42,6 +47,7 @@ export default function ChatBox() {
       setComment("");
     })();
   };
+  //Get all users
   async function getUsers() {
     const collectionRef = collection(db, 'users');
     unsub = onSnapshot(collectionRef, (snapShot) => {
@@ -57,9 +63,11 @@ export default function ChatBox() {
     SetUser(users);
     SetIdUserTwo(user?.find(x => x.id === userIdTwo)?.id_user)
     setDataSort()
-    getInfoUserTwo()
+    setUserTwo(user?.find(x => x.id === userIdTwo))
+
 });
 }
+  //Get info user two
   const handlerRoom = async () => {        
     const collectionRef  = collection(db, "roomchat");
     const collectionQuery = query(collectionRef, where('roomID', 'in', [[idUserTwo, useId], [useId, idUserTwo]]));
@@ -76,16 +84,7 @@ export default function ChatBox() {
     });
     setRooms(room);
 });
-    console.log(rooms)
-    console.log(idUserTwo)
 }
-  useEffect(() => {
-    handlerRoom()
-    getUsers()
-  }, [idUserTwo])
-  const getInfoUserTwo = () => {
-    setUserTwo(user?.find(x => x.id === userIdTwo))
-  }
 
   return (
     <div>
@@ -96,7 +95,7 @@ export default function ChatBox() {
           <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen">
             <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
               <div className="relative flex items-center space-x-4">
-                  <span className={userTwo.status ? "absolute text-green-500 bottom-1  left-2" : "absolute text-red-500 bottom-1  left-2"}>
+                  <span className={userTwo?.status ? "absolute text-green-500 bottom-1  left-2" : "absolute text-red-500 bottom-1  left-2"}>
                     <svg width={20} height={20}>
                       <circle cx={8} cy={8} r={8} fill="currentColor" />
                     </svg>
@@ -133,7 +132,7 @@ export default function ChatBox() {
             </div>
             <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
               <div className=" helloworld relative flex ">
-                <form className="w-full" onSubmit={(e) => push(e)}>
+                <form className="w-full" onSubmit={(e) => handlerSubmit(e)}>
                   <input
                     onChange={(evt) => setComment(evt.target.value)}
                     type="text"

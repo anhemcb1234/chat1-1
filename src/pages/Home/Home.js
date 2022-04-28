@@ -1,31 +1,43 @@
 import React, { useEffect, useState } from "react";
 import {auth, db} from "../../firebase";
 import {useNavigate, Link} from 'react-router-dom'
-import {collection, deleteDoc, doc, onSnapshot,getDoc, addDoc, docRef, updateDoc, query, where } from "firebase/firestore";
+import {collection, doc, onSnapshot, updateDoc } from "firebase/firestore";
 
 function Home() {
+    let navigate = useNavigate();
+    
     const green = "w-5 h-5 bg-green-500 rounded"
     const red = "w-5 h-5 bg-red-500 rounded"
+    
     const [user, SetUser] = useState([]);
-    const [rooms, setRooms] = useState([]);
     const [id, setId] = useState('');
     const [statusLogin, setStatusLogin] = useState(false);
     const [filter, setFilter] = useState('')
-    let navigate = useNavigate();
+    
     let unsub = null;
     let time = new Date()
 
+    useEffect( () => {      
+        getUsers()
+    },[])
+    useEffect(() => {
+        updateStatus() 
+    },[statusLogin])
+
+    //Update Status Login
     const updateStatus = async () => {
         const data = user.filter(user => user.id_user === id)
         const docRef = await doc(db, 'users', data[0]?.id);
         await updateDoc(docRef, {status: true});
     };
+    //Update Status Logout
     const updateStatusLoguot = async () => {
         const data = user.filter(user => user.id_user === id)
         const docRef = await doc(db, 'users', data[0].id);
         await updateDoc(docRef, {status: false});
         alert('Đăng xuất thành công')
     };
+    //Get User
     async function getUsers() {
         setId(auth?.currentUser?.uid)
         const collectionRef = collection(db, 'users');
@@ -43,14 +55,7 @@ function Home() {
         SetUser(users);
     });
 }
-    useEffect( () => {
-        
-        getUsers()
-    },[])
-    useEffect(() => {
-        updateStatus() 
-    },[statusLogin])
-
+    // Log out button
     const _logOut = () => {
         updateStatusLoguot()
         setTimeout(() => {
@@ -59,9 +64,11 @@ function Home() {
             navigate('/')
         },1000)
     }
+    //Fitler users
     const handlerFilter = (e) => {
         setFilter(e.target.value)
     }
+
     return (
         <div className="py-10 h-screen bg-gray-300 px-2">
         <div className="max-w-md mx-auto bg-gray-100 shadow-lg rounded-lg overflow-hidden md:max-w-lg">

@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useState } from 'react';
 import {createUserWithEmailAndPassword } from 'firebase/auth';
 import {auth, db} from "../firebase";
 import { useNavigate, Link } from 'react-router-dom';
-import {collection, deleteDoc, doc, onSnapshot, addDoc } from "firebase/firestore";
-import { async } from '@firebase/util';
+import {collection,  addDoc } from "firebase/firestore";
 
 
 const Signin = () => {
@@ -11,6 +10,7 @@ const Signin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const time = new Date()
+
 
     const _doSignin = (evt) => {
         evt.preventDefault();
@@ -33,6 +33,8 @@ const Signin = () => {
         console.log(id)
         await addDoc(collectionRef, { createdAt: time,email: email, password: password,status: false, uid: id});
     }
+
+
     return (
         <div className="bg-white h-screen items-center justify-center shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
             <h1 className='font-bold mb-2 uppercase'>Đăng kí</h1>

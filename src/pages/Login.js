@@ -8,6 +8,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    
     const _doLogin = async (evt) => {
         evt.preventDefault();
         try {
@@ -23,9 +24,6 @@ const Login = () => {
 
     }
 
-    const signOut = async (evt) => {
-        await signOut(auth);
-    };
     return (
             <div className="bg-white h-screen  items-center justify-center shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
                 <h1 className='font-bold mb-2 uppercase'>Đăng nhập</h1>
