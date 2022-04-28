@@ -6,16 +6,17 @@ import {
   Link,
 } from "react-router-dom";
 import Login from './pages/Login';
-import SignIn from './pages/SignIn';
-import Home from './pages/home/Home'
-import ChatBox from './pages/home/ChatBox'
+import Home from "./pages/Home/Home";
+import ChatBox from "./pages/Home/ChatBox";
+import SignUp from "./pages/SignUp";
+
 export default function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/SignIn" element={<SignIn />} />
+          <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/ChatBox" element={<ChatBox />} >
         </Route>
