@@ -76,7 +76,7 @@ function Home() {
   return (
     <>
       {show ? (
-        <div className="py-10 h-full bg-gray-300 px-2">
+        <div className="py-10 overflow-hidden h-screen bg-gray-300 px-2">
           {auth.currentUser?.email ? (
             <div className="max-w-md mx-auto bg-gray-100 shadow-lg rounded-lg overflow-hidden md:max-w-lg">
               <div>

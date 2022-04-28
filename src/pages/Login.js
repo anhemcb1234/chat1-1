@@ -22,7 +22,7 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-white h-screen  items-center justify-center shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+    <div className="bg-white h-screen overflow-hidden  items-center justify-center shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
       {show ? (
         <>
           <div className="mb-4">
