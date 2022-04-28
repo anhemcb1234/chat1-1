@@ -91,7 +91,7 @@ export default function ChatBox() {
   return (
     <div>
       {" "}
-      {userTwo?.status ?
+      {userTwo?.email ?
       <div>
         <div>
           {/* component */}
