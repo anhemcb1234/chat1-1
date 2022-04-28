@@ -12,6 +12,7 @@ const Signin = () => {
 
   const time = new Date();
 
+  //Hanlder Signin
   const _doSignin = (evt) => {
     setShow(false);
     evt.preventDefault();
@@ -26,6 +27,7 @@ const Signin = () => {
         alert("Sign in fail");
       });
   };
+  //Push data user to firestore
   async function pushData(id) {
     const collectionRef = collection(db, "users");
     console.log(id);

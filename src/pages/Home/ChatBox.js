@@ -10,7 +10,6 @@ import {
   where,
 } from "firebase/firestore";
 
-
 export default function ChatBox() {
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
@@ -23,7 +22,6 @@ export default function ChatBox() {
   const [idUserTwo, SetIdUserTwo] = useState("");
   const [dataSort, setDataSort] = useState([]);
   const [userTwo, setUserTwo] = useState([]);
-  const [icon, setIcon] = useState([]);
 
   let unsub = null;
 
