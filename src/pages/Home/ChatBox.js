@@ -20,7 +20,6 @@ export default function ChatBox() {
   const [rooms, setRooms] = useState([]);
   const [user, SetUser] = useState([]);
   const [idUserTwo, SetIdUserTwo] = useState("");
-  const [dataSort, setDataSort] = useState([]);
   const [userTwo, setUserTwo] = useState([]);
 
   let unsub = null;
@@ -70,7 +69,6 @@ export default function ChatBox() {
       });
       SetUser(users);
       SetIdUserTwo(user?.find((x) => x.id === userIdTwo)?.id_user);
-      setDataSort();
       setUserTwo(user?.find((x) => x.id === userIdTwo));
     });
   }
@@ -99,11 +97,14 @@ export default function ChatBox() {
       setRooms(room);
     });
   };
-
+  useEffect(() => {
+    console.log(rooms)
+    console.log(user)
+  })
   return (
     <div className="overflow-hidden">
       {" "}
-      {rooms[0] ? (
+      {(rooms[0]?.id_room && user) || user.length !== 0 ? (
         <div>
           <div>
             {/* component */}
