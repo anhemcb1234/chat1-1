@@ -17,7 +17,7 @@ export default function ChatBox() {
   let unsub = null
   //
   useEffect(() => {
-    console.log(auth?.currentUser?.uid)
+
   }, [])
   const push = (e) => {
     e.preventDefault();

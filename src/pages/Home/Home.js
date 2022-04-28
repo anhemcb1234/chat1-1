@@ -10,6 +10,7 @@ function Home() {
     const [rooms, setRooms] = useState([]);
     const [id, setId] = useState('');
     const [statusLogin, setStatusLogin] = useState(false);
+    const [filter, setFilter] = useState('')
     let navigate = useNavigate();
     let unsub = null;
     let time = new Date()
@@ -43,29 +44,13 @@ function Home() {
     });
 }
     useEffect( () => {
+        
         getUsers()
     },[])
     useEffect(() => {
         updateStatus() 
     },[statusLogin])
-    const handlerRoom = async () => {
-        
-        const collectionRef  = collection(db, "roomchat");
-        const collectionQuery = query(collectionRef, where('id_user', 'in', [id, 'DA2eynkR1aanGlnOAqwBbzyvrzj1']));
-        unsub = onSnapshot(collectionQuery, (snapShot) => {
-            const room = [];
-            snapShot.forEach(doc => {
-                room.push({
-                id_user: doc.data().uid,
-                id_room: doc.data().id_user[0],
-                message: [],
-            });
-        });
-        setRooms(room);
-    });
-    console.log(rooms)
-        console.log(id)
-    }
+
     const _logOut = () => {
         updateStatusLoguot()
         setTimeout(() => {
@@ -73,6 +58,9 @@ function Home() {
             auth.signOut();
             navigate('/')
         },1000)
+    }
+    const handlerFilter = (e) => {
+        setFilter(e.target.value)
     }
     return (
         <div className="py-10 h-screen bg-gray-300 px-2">
@@ -84,11 +72,10 @@ function Home() {
             </div>
             
             <div className="w-full p-4">
-                <div className="relative"> <input type="text" className="w-full h-12 rounded focus:outline-none px-3 focus:shadow-md" placeholder="Search..."/>  </div>
-                {user && user.map((user, index) => {
+                <div className="relative"> <input onChange={e => handlerFilter(e)} type="text" className="w-full h-12 rounded focus:outline-none px-3 focus:shadow-md" placeholder="Search..."/>  </div>
+                {user && user.filter(x => x.email.toUpperCase().includes(filter.toUpperCase())).map((user, index) => {
                     return (
                         <div key={index}>
-                            <button onClick={handlerRoom}>Click</button>
                             <Link  to={`/chatbox?id=${user.id}`}>
                             <ul className={user.email.toUpperCase() === auth.currentUser.email.toUpperCase() ? "flex w-full items-center justify-between  hidden" : 'flex w-full items-center justify-between ' }>
                                 <li className="flex w-full justify-between items-center bg-white mt-2 p-2 hover:shadow-lg rounded cursor-pointer transition">
