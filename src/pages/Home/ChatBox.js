@@ -23,6 +23,9 @@ export default function ChatBox() {
 
 
   useEffect(() => {
+    if(!sessionStorage.getItem('user')){
+      navigate('/')
+    }
     handlerRoom()
     getUsers()
   }, [idUserTwo])
@@ -67,9 +70,9 @@ export default function ChatBox() {
     setDataSort()
     setUserTwo(user?.find(x => x.id === userIdTwo))
 });
-  }
+}
 
-  //Get info user two
+  //Get message roomchat
   const handlerRoom = async () => {        
     const collectionRef  = collection(db, "roomchat");
     const collectionQuery = query(collectionRef, where('roomID', 'in', [[idUserTwo, useId], [useId, idUserTwo]]));
