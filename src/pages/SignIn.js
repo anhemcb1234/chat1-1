@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {createUserWithEmailAndPassword } from 'firebase/auth';
 import {auth, db} from "../firebase";
 import { useNavigate, Link } from 'react-router-dom';
@@ -8,13 +8,11 @@ import { async } from '@firebase/util';
 
 const Signin = () => {
     let navigate = useNavigate();
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const time = new Date()
-    useEffect(() => {
-    }, [])
-    const _doSignin = async (evt) => {
+
+    const _doSignin = (evt) => {
         evt.preventDefault();
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
