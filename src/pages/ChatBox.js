@@ -29,7 +29,7 @@ export default function ChatBox() {
   const handlerSubmit = (e) => {
     e.preventDefault();
     if (!comment) {
-      alert("Bạn chưa nhập nội dung");
+      alert("Can't be empty input");
       return;
     }
     const collectionRef = collection(db, "roomchat");

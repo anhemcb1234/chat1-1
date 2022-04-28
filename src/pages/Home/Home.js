@@ -35,7 +35,7 @@ function Home() {
         const data = user.filter(user => user.id_user === id)
         const docRef = await doc(db, 'users', data[0].id);
         await updateDoc(docRef, {status: false});
-        alert('Đăng xuất thành công')
+        alert('Logout Success')
     };
     //Get User
     async function getUsers() {
@@ -74,12 +74,12 @@ function Home() {
         <div className="max-w-md mx-auto bg-gray-100 shadow-lg rounded-lg overflow-hidden md:max-w-lg">
         <div >
             <div className="flex items-center justify-between m-5 px-4">
-                <h2>User: {auth?.currentUser?.email}</h2>
-                <button className='px-3  float-right py-2 text-sm text-blue-100 bg-red-600 rounded' onClick={_logOut}>Đăng xuất</button>
+                <h2 className="font-bold">User: {auth?.currentUser?.email}</h2>
+                <button className='px-3  float-right py-2 text-sm text-blue-100 bg-red-600 rounded' onClick={_logOut}>Log out</button>
             </div>
             
             <div className="w-full p-4">
-                <div className="relative"> <input onChange={e => handlerFilter(e)} type="text" className="w-full h-12 rounded focus:outline-none px-3 focus:shadow-md" placeholder="Search..."/>  </div>
+                <div className="relative"> <input  onChange={e => handlerFilter(e)} type="text" className="w-full mb-3 h-12 rounded focus:outline-none px-3 focus:shadow-md" placeholder="Search..."/>  </div>
                 {user && user.filter(x => x.email.toUpperCase().includes(filter.toUpperCase())).map((user, index) => {
                     return (
                         <div key={index}>
