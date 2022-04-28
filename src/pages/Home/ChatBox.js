@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { db, auth } from "../../firebase";
@@ -13,6 +13,7 @@ import {
 export default function ChatBox() {
   const navigate = useNavigate();
   const [searchParam] = useSearchParams();
+  const divRef = useRef(null);
 
   const [comment, setComment] = useState("");
   const useId = JSON.parse(sessionStorage.getItem("user")).uid;
@@ -33,6 +34,9 @@ export default function ChatBox() {
     getUsers();
   }, [idUserTwo]);
 
+  useEffect(() => {
+    divRef?.current?.scrollIntoView({ behavior: "smooth" });
+  });
   //Hanlder submit
   const handlerSubmit = (e) => {
     e.preventDefault();
@@ -75,6 +79,30 @@ export default function ChatBox() {
     });
   }
 
+  //Get message roomchat
+  const handlerRoom = async () => {
+    const collectionRef = collection(db, "roomchat");
+    const collectionQuery = query(
+      collectionRef,
+      where("roomID", "in", [
+        [idUserTwo, useId],
+        [useId, idUserTwo],
+      ])
+    );
+    unsub = onSnapshot(collectionQuery, (snapShot) => {
+      const room = [];
+      snapShot.forEach((doc) => {
+        room.push({
+          id: doc.id,
+          id_user: doc.data().user,
+          id_room: doc.data().roomID,
+          message: doc.data().message,
+          time: doc.data().time,
+        });
+      });
+      setRooms(room);
+    });
+  };
 
   return (
     <div>
@@ -117,13 +145,13 @@ export default function ChatBox() {
               </div>
               <div
                 id="messages"
-                className="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+                className="flex   flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
               >
                 {rooms
                   ?.sort((a, b) => a.time.seconds - b.time.seconds)
                   .map((item, index) => {
                     return (
-                      <div key={index}>
+                      <div className="inline-block align-bottom" key={index}>
                         <span
                           className={
                             item.id_user === useId
@@ -136,6 +164,7 @@ export default function ChatBox() {
                       </div>
                     );
                   })}
+                <div ref={divRef} />
               </div>
               <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
                 <div className=" helloworld relative flex ">
