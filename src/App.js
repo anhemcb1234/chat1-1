@@ -6,9 +6,9 @@ import {
   Link,
 } from "react-router-dom";
 import Login from './pages/Login';
-import Home from "./pages/Home/Home";
-import ChatBox from "./pages/Home/ChatBox";
-import SignUp from "./pages/SignUp";
+import Home from "./pages/home/Home";
+import ChatBox from "./pages/home/ChatBox";
+import SignIp from "./pages/SignIn";
 
 export default function App() {
   return (
@@ -16,7 +16,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/SignUp" element={<SignIp />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/ChatBox" element={<ChatBox />} >
         </Route>
