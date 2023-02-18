@@ -2,6 +2,7 @@
   "name": "project1",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://anhemcb1234.github.io/chat1-1/",
   "dependencies": {
     "@material-tailwind/react": "0.3.4",
     "@testing-library/jest-dom": "^5.16.4",
@@ -10,6 +11,7 @@
     "axios": "^0.26.1",
     "firebase": "^9.6.11",
     "firebase-admin": "^10.1.0",
+    "gh-pages": "^5.0.0",
     "jwt-decode": "^3.1.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -23,7 +25,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
